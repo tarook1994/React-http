@@ -1,64 +1,30 @@
 import React, { Component } from 'react';
-import Axios from 'axios'
 
-import Post from '../../components/Post/Post';
-import FullPost from '../../components/FullPost/FullPost';
-import NewPost from '../../components/NewPost/NewPost';
+import Posts from '../Posts/Posts';
 import './Blog.css';
-import { maxHeaderSize } from 'http';
 
 class Blog extends Component {
-    state = {
-        posts : [],
-        showPost : null
-    }
-
-    componentWillMount(){
-        Axios.get("/posts").
-        then(response => {
-            console.log(response.status)
-            const posts = response.data.slice(0,4);
-            const updatedPosts = posts.map(post => {
-                return {
-                    ...post,
-                    author: 'max'
-                }
-            })
-            this.setState({
-                posts:updatedPosts
-
-            })
-        })
-    }
-
-    postClickedHandler = (id) => {
-        this.setState({
-            showPost : id
-        })
-    }
 
 
-    render () {
+    render() {
 
-        const posts = this.state.posts.map(post=> {
-            return <Post 
-            key = {post.id}
-            title = {post.title}
-            author = {post.author}
-            clicked = {()=> this.postClickedHandler(post.id)}
-            />
-        });
+
         return (
-            <div>
-                <section className="Posts">
-                   {posts}
-                </section>
-                <section>
-                    <FullPost id={this.state.showPost} />
-                </section>
-                <section>
-                    <NewPost />
-                </section>
+            <div className='Blog'>
+                <header>
+                    <nav>
+                        <ul>
+                            <li><a href='/'>Home</a></li>
+                            <li><a href='/newpost'>New Post</a></li>
+
+                        </ul>
+                    </nav>
+
+                </header>
+
+                <Posts></Posts>
+
+
             </div>
         );
     }
